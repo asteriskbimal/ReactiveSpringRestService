@@ -25,7 +25,6 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 
     private final Bucket bucket;
 
-
     public GenericDaoImpl(Bucket bucket) {
         this.bucket = bucket;
     }

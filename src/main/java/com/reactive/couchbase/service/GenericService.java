@@ -6,16 +6,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
-@Service
 public class GenericService<T> {
 
-    private final GenericDaoImpl<T> genericDaoImpl;
-
-    @Autowired
-    public GenericService(GenericDaoImpl<T> genericDaoImpl) {
-        this.genericDaoImpl = genericDaoImpl;
-    }
+    protected  GenericDaoImpl<T> genericDaoImpl;
 
     public Flux<T> getAll(T entity){
         return genericDaoImpl.getAll((entity));

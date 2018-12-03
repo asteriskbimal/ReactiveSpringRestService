@@ -1,6 +1,7 @@
 package com.reactive.couchbase.controller;
 
 import com.reactive.couchbase.model.Entity;
+import com.reactive.couchbase.service.EntityHystrixCommand;
 import com.reactive.couchbase.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ public class EntityController {
     @Autowired
     GenericService<Entity> genericService;
 
+    @Autowired
+    EntityHystrixCommand entityHystrixCommand;
+
     @GetMapping("/entity/{id}/{name}")
     private Mono<Entity> getEmployeeById(@PathVariable String id, @PathVariable String name) {
         Entity e=new Entity();
@@ -29,5 +33,30 @@ public class EntityController {
     private List<Entity> getAllEmployees() {
          Flux<Entity> flux=genericService.getAll(new Entity());
         return flux.collectList().block();
+    }
+
+    @GetMapping("/entity/string/{id}/{name}")
+    private String getEmployesStringById(@PathVariable String id, @PathVariable String name) {
+        Entity e=new Entity();
+        e.setId(id);
+        e.setName(name);
+        entityHystrixCommand.setEntity(e);
+        return entityHystrixCommand.execute();
+    }
+
+    public GenericService<Entity> getGenericService() {
+        return genericService;
+    }
+
+    public void setGenericService(GenericService<Entity> genericService) {
+        this.genericService = genericService;
+    }
+
+    public EntityHystrixCommand getEntityHystrixCommand() {
+        return entityHystrixCommand;
+    }
+
+    public void setEntityHystrixCommand(EntityHystrixCommand entityHystrixCommand) {
+        this.entityHystrixCommand = entityHystrixCommand;
     }
 }
