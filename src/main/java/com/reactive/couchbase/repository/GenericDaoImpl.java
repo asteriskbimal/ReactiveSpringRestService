@@ -38,6 +38,8 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
             bucket.remove(key);     
         } catch (DocumentDoesNotExistException e) {
              bucket.counter(key, 0, 1000);
+        } catch(Exception e){
+            logger.error(e.getMessage());
         }
     }
     
