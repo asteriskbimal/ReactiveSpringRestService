@@ -35,16 +35,26 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
     public String createKey(T entity){
 
         String compositeKey = entity.getClass().getSimpleName();
+      
         try {
+            int count=0;
             Field[] fields = entity.getClass().getDeclaredFields();
-            for (Field f : fields) {
-                if (f.isAnnotationPresent(BucketKey.class)) {
-                    f.setAccessible(true);
-                    String value = (String) f.get(entity);
-                    compositeKey = compositeKey + ":" + value;
-                }
+                    for (Field f : fields) {
+                        if (f.isAnnotationPresent(BucketKey.class)) {
+                            count++;
+                            f.setAccessible(true);
+                            String value = (String) f.get(entity);
+                            compositeKey = compositeKey + "::" + value;
+                        }
+                    }
+            if(count==0)
+                    String key = "idGeneratorFor"+compositeKey;
+                    long nextIdNumber = bucket.counter(key, 1).content();
+                    compositeKey = entity.getClass().getSimpleName()+"::"+nextIdNumber;
             }
         }catch(IllegalAccessException e){
+            logger.error(e.getMessage());
+        }catch(Exception e){
             logger.error(e.getMessage());
         }
         return compositeKey;
