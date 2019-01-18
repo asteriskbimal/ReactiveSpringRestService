@@ -31,13 +31,28 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 
     JSONSerializer serializer = new JSONSerializer();
     JSONDeserializer<T> deserializer = new JSONDeserializer<>();
+    
+    public void createSequenceGneratorForEntity(){
+        String key = "sequence_"+entity.getClass().getSimpleName();;
+        try {
+            bucket.remove(key);     
+        } catch (DocumentDoesNotExistException e) {
+             bucket.counter(key, 0, 1000);
+        }
+    }
+    
+    public String createSequenceKey(T entity){
+        String compositeKey = entity.getClass().getSimpleName();
+        String key = "sequence_"+compositeKey;
+        long nextIdNumber = bucket.counter(key, 1).content();
+        compositeKey = entity.getClass().getSimpleName()+"::"+nextIdNumber;
+    }
 
     public String createKey(T entity){
 
         String compositeKey = entity.getClass().getSimpleName();
       
         try {
-            int count=0;
             Field[] fields = entity.getClass().getDeclaredFields();
                     for (Field f : fields) {
                         if (f.isAnnotationPresent(BucketKey.class)) {
@@ -47,11 +62,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
                             compositeKey = compositeKey + "::" + value;
                         }
                     }
-            if(count==0)
-                    String key = "idGeneratorFor"+compositeKey;
-                    long nextIdNumber = bucket.counter(key, 1).content();
-                    compositeKey = entity.getClass().getSimpleName()+"::"+nextIdNumber;
-            }
+            
         }catch(IllegalAccessException e){
             logger.error(e.getMessage());
         }catch(Exception e){
