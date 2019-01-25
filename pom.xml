@@ -71,7 +71,11 @@
             <artifactId>rxjava-core</artifactId>
             <version>0.20.7</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jool</artifactId>
+            <version>0.9.11</version>
+        </dependency>
 
     </dependencies>
 
