@@ -3,9 +3,7 @@ language: java
 jdk:
 - openjdk11
 sudo: required
-script: mvn clean install package
-services:
-  -docker
-after_install:
-  docker build -t bimal/docker-reactive -f Dockerfile.dev .
+script: 
+  -mvn clean install package
+  -docker build -t bimal/docker-reactive -f Dockerfile.dev .
 
