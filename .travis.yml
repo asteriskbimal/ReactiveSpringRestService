@@ -7,5 +7,5 @@ script: mvn clean install package
 services:
   -docker
 before_install:
-  -docker build -t bimal/docker-reactive -f Dockerfile.dev .
+  docker build -t bimal/docker-reactive -f Dockerfile.dev .
 
