@@ -1,8 +1,8 @@
 language: java
-# use Java 11
 jdk:
 - openjdk11
 sudo: required
 script: docker build -t bimal/docker-reactive -f Dockerfile.dev .
+
 
 
