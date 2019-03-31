@@ -3,6 +3,7 @@ package com.reactive.couchbase.repository;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
+import com.couchbase.client.java.error.DocumentDoesNotExistException;
 import com.couchbase.client.java.query.*;
 import com.reactive.couchbase.model.BucketKey;
 import flexjson.JSONDeserializer;
@@ -32,7 +33,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
     JSONSerializer serializer = new JSONSerializer();
     JSONDeserializer<T> deserializer = new JSONDeserializer<>();
     
-    public void createSequenceGneratorForEntity(){
+    public void createSequenceGneratorForEntity(T entity){
         String key = "sequence_"+entity.getClass().getSimpleName();;
         try {
             bucket.remove(key);     
@@ -48,6 +49,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
         String key = "sequence_"+compositeKey;
         long nextIdNumber = bucket.counter(key, 1).content();
         compositeKey = entity.getClass().getSimpleName()+"::"+nextIdNumber;
+        return compositeKey;
     }
 
     public String createKey(T entity){
@@ -58,7 +60,6 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
             Field[] fields = entity.getClass().getDeclaredFields();
                     for (Field f : fields) {
                         if (f.isAnnotationPresent(BucketKey.class)) {
-                            count++;
                             f.setAccessible(true);
                             String value = (String) f.get(entity);
                             compositeKey = compositeKey + "::" + value;
