@@ -6,5 +6,6 @@ sudo: required
 script: mvn clean install package
 services:
   -docker
-after_install:
+before_install:
   -docker build -t bimal/docker-reactive -f Dockerfile.dev .
+
