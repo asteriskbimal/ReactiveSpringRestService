@@ -1,5 +1,4 @@
 language: java
-# use Java 11
 jdk:
 - openjdk11
 sudo: required
