@@ -3,6 +3,8 @@ language: java
 jdk:
 - openjdk11
 sudo: required
-script: ./test.sh
+script: 
+-chmod +x ./test.sh 
+-./test.sh
 
 
