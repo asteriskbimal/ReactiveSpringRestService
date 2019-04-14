@@ -1,8 +1,10 @@
-language: java
-jdk:
-- openjdk11
 sudo: required
-script: docker build -t bimal/docker-reactive -f Dockerfile.dev .
-
-
-
+services:
+  - docker
+script:
+  -  docker build -t bimal/docker-reactive -f Dockerfile.dev .
+after_success:
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push bimal/docker-reactive
