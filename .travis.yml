@@ -3,7 +3,7 @@ sudo: required
 services:
   - docker
 script:
-  -  docker build -t bimal/java -f Dockerfile.dev .
+  -  docker build -t gcr.io/bimal-157419/bimal/java -f Dockerfile.dev .
 after_success:
   # Take those images and push them to docker hub
   - docker login -u "oauth2accesstoken" -p "$PASSWORD" https://gcr.io/bimal-157419
