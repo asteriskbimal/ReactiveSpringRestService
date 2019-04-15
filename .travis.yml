@@ -6,5 +6,5 @@ script:
   -  docker build -t bimal/java -f Dockerfile.dev .
 after_success:
   # Take those images and push them to docker hub
-  - docker login -u _json_key -p "${GCR_JSON_KEY}" https://gcr.io
-  - docker push bimal/java:latest
+  - echo "$GCR_JSON_KEY" | docker login -u _json_key --password-stdin
+  - docker push gcr.io/bimal-157419/bimal/java:latest
