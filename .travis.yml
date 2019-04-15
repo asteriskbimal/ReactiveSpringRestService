@@ -3,9 +3,9 @@ sudo: required
 services:
   - docker
 script:
-  -  docker build -t bimal/docker-reactive -f Dockerfile.dev .
+  -  docker build -t asteriskbimal/test:tagname -f Dockerfile.dev .
 after_success:
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push bimal/docker-reactive
+  - docker push asteriskbimal/test:tagname
