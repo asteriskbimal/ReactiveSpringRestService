@@ -7,4 +7,4 @@ script:
 after_success:
   # Take those images and push them to docker hub
   - docker login -u "oauth2accesstoken" -p "$PASSWORD" https://gcr.io/bimal-157419
-  - docker push gcr.io/bimal-157419/bimal/java:latest
+  - docker  push gcr.io/bimal-157419/bimal/java:latest
