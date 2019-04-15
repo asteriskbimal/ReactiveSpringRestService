@@ -6,5 +6,5 @@ script:
   -  docker build -t bimal/java -f Dockerfile.dev .
 after_success:
   # Take those images and push them to docker hub
-  - docker login -e asteriskbimal@gmail.com -u "oauth2accesstoken" -p "$PASSWORD" https://gcr.io
+  - docker login -u "oauth2accesstoken" -p "$PASSWORD" https://gcr.io
   - docker push bimal/java:latest
