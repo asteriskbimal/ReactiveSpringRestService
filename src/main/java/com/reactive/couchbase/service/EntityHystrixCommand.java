@@ -42,13 +42,16 @@ public class EntityHystrixCommand extends HystrixCommand<String> {
     }
 
     @Override
-    protected String run() {
+    protected String run() throws Exception{
+        if(true){
+            thorw new Exception();
+        }
         return entityService.businessLogicSpecificToEntity(getEntity());
     }
-
+    // deploy the service in different nodes created in different zones within same Google cloud kubernetes cluster and check the date zone 
     @Override
     protected String getFallback(){
-        return "Entity Service failed to respond";
+        return "Entity Service failed to respond at the time :" + new java.util.Date();
     }
 
     @Override
