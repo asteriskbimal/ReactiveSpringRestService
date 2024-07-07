@@ -42,3 +42,11 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+    - name: upload artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: $HOME/actions-runner/release/
+        asset_name: reactive-rest-service.jar
