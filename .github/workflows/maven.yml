@@ -10,14 +10,14 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "*" ]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [blade-runner]
 
     steps:
     - uses: actions/checkout@v3
