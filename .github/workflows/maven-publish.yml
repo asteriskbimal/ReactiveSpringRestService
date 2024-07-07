@@ -50,3 +50,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: $HOME/actions-runner/release/
         asset_name: reactive-rest-service.jar
+        asset_content_type: application/gzip
