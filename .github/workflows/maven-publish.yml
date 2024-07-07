@@ -28,7 +28,7 @@ jobs:
       run: mvn -B package --file pom.xml
         
     - name: Publish to GitHub Packages Apache Maven
-      run: mv ${{ github.workspace  }}/target/reactive-rest-service-*.jar $HOME/actions-runner/release/reactive-rest-service.jar
+      run: mv ${{ github.workspace  }}/target/reactive-rest-service-*.jar ${{ github.workspace  }}/target/reactive-rest-service.jar
       env:
         GITHUB_TOKEN: ${{ github.token }}
         
@@ -48,6 +48,6 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: $HOME/actions-runner/release/
+        asset_path: ${{ github.workspace  }}/target/reactive-rest-service.jar
         asset_name: reactive-rest-service.jar
         asset_content_type: application/gzip
