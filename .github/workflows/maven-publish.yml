@@ -12,10 +12,10 @@ jobs:
   build:
 
     runs-on: [blade-runner]
-    permissions:
-      contents: read
+    permissions: 
+      contents: write
       packages: write
-
+      
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 8
