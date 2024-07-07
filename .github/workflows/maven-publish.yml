@@ -29,6 +29,6 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mv /_work/ReactiveSpringRestService/ReactiveSpringRestService/target/reactive-rest-service-*.jar reactive-rest-service.jar
+      run: mv /target/reactive-rest-service-*.jar reactive-rest-service.jar
       env:
         GITHUB_TOKEN: ${{ github.token }}
